@@ -1,24 +1,18 @@
 import requests
 import allure
+from Urls import *
+from data import *
+from conftest import *
 
-URL = "https://stellarburgers.nomoreparties.site/api/auth/user"
-URL2 = "https://stellarburgers.nomoreparties.site/api/auth/login"
 
 class TestChangingUserData:
 
     @allure.title("Проверка возможности смены имени у авторизированного пользователя")
-    def test_changing_name_user_with_login(self):
-
-        login_response = requests.post(URL2, json={
-            "email": "test.mail@yandex.ru",
-            "password": "password123"
-        })
-        assert login_response.status_code == 200
-        access_token = login_response.json()["accessToken"]
-
+    def test_changing_name_user_with_login(self, user_login):
+        access_token = user_login
         response = requests.patch(
             URL,
-            json={"email": "test.myau@yandex.ru", "name": "Lerochka"},
+            json={"email": "test.mail@yandex.ru", "name": "Lerochka"},
             headers={"Authorization": access_token}
         )
         assert response.status_code == 200
@@ -27,15 +21,9 @@ class TestChangingUserData:
         assert response.json()["user"]["name"] == "Anna"
 
     @allure.title("Проверка возможности смены почты у авторизированного пользователя")
-    def test_changing_email_user_with_login(self):
+    def test_changing_email_user_with_login(self, user_login):
 
-        login_response = requests.post(URL2, json={
-            "email": "test.mail@yandex.ru",
-            "password": "password123"
-        })
-        assert login_response.status_code == 200
-        access_token = login_response.json()["accessToken"]
-
+        access_token = user_login
         response = requests.patch(
             URL,
             json={"email": "test.mail@yandex.ru", "name": "Anna"},
