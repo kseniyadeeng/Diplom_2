@@ -1,2 +1,3 @@
 URL = "https://stellarburgers.nomoreparties.site/api/auth/user"
-URL2 = "https://stellarburgers.nomoreparties.site/api/auth/login"
+URL_2 = "https://stellarburgers.nomoreparties.site/api/auth/login"
+URL_3 = "https://stellarburgers.nomoreparties.site/api/auth/register"
