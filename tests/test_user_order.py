@@ -1,20 +1,20 @@
 import requests
 import allure
-URL = "https://stellarburgers.nomoreparties.site/api/orders"
-URL2 = "https://stellarburgers.nomoreparties.site/api/auth/login"
+from Urls import *
+
 
 class TestUserOrder:
 
     @allure.title("Проверка получения заказов без авторизации")
     def test_order_user_without_login(self):
-        response = requests.get(URL)
+        response = requests.get(URL_4)
         assert response.status_code == 401
         assert response.json()["success"] is False
         assert response.json()["message"] == "You should be authorised"
 
     @allure.title("Проверка получения заказов с авторизацией")
     def test_order_user_with_login(self):
-        login_response = requests.post(URL2, json={
+        login_response = requests.post(URL_2, json={
             "email": "test.myau@yandex.ru",
             "password": "cool password"
         })
